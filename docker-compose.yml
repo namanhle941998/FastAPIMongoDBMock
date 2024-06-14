@@ -1,0 +1,39 @@
+services:
+  app:
+    container_name: mockappcontainer
+    image: mockappimage
+    ports:
+      - '8000:8000'
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - mockappnetwork
+  mongodb:
+    container_name: mongodbcontainer
+    image: mongodb/mongodb-community-server:latest
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: fastapi
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - mockappnetwork
+  redis:
+    container_name: rediscontainer
+    image: redis/redis-stack
+    ports:
+      - '6379:6379'
+    networks:
+      - mockappnetwork
+volumes:
+  mongodb:
+networks:
+  mockappnetwork:
+    driver: bridge
+

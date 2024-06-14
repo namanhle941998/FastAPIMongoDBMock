@@ -1,0 +1,8 @@
+fastapi
+pydantic
+pyjwt
+bcrypt==4.0.1
+passlib
+redis
+langchain
+openai
